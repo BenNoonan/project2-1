@@ -2,11 +2,28 @@ package com.imgscoop.scoops;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="THREAD")
 public class Thread {
 
+	@Id
+	@Column(name="THREAD_ID")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@ManyToMany(mappedBy="thread")
 	private Tag tags;
+	@Column(name="TITLE")
 	private String title;
+	@OneToMany(mappedBy="thread")
 	private List<Post> posts;
 	
 	public Thread() {
