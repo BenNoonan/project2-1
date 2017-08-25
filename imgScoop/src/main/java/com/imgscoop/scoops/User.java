@@ -1,10 +1,13 @@
 package com.imgscoop.scoops;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,10 +24,12 @@ public class User {
 	private String email;
 	@Column(name="USER_PASSWORD")
 	private String password;
-	//@Column(name="USER_ROLE")
+	@Column(name="USER_ROLE")
+	@OneToMany(mappedBy="user")
 	private Role role;
-	//@Column(name="USER_POSTS")
-	private Post posts;
+	@Column(name="USER_POSTS")
+	@OneToMany(mappedBy="user")
+	private List<Post> posts;
 	
 	public User() {
 		super();
@@ -32,7 +37,7 @@ public class User {
 	/*
 	 * TODO implementation with JDBCrypt for password initiation
 	 */
-	public User(int id, String username, String email, String password, Role role, Post posts) {
+	public User(int id, String username, String email, String password, Role role, List<Post> posts) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -41,7 +46,7 @@ public class User {
 		this.role = role;
 		this.posts = posts;
 	}
-	public User(int id, String username, String email, Role role, Post posts) {
+	public User(int id, String username, String email, Role role, List<Post> posts) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -79,10 +84,10 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public Post getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
-	public void setPosts(Post posts) {
+	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
 	@Override
