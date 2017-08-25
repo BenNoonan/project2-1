@@ -19,7 +19,7 @@ public class Tag {
 	private int id;
 	@Column(name="tag_type")
 	private String tag;
-	@ManyToMany(mappedBy="tags")
+	@ManyToMany(mappedBy = "tags")
 	private List<Thread> threads;
 
 	public Tag() {

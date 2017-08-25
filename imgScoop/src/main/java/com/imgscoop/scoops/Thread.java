@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,24 +14,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="scoop_thread")
+@Table(name = "scoop_thread")
 public class Thread {
 
 	@Id
-	@Column(name="thread_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "thread_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToMany(mappedBy="threads")
-	@JoinTable(name="thread_tags")
+	@ManyToMany
+	@JoinTable(name = "thread_tags")
 	private List<Tag> tags;
-	@Column(name="thread_title")
+	@Column(name = "thread_title")
 	private String title;
-	@OneToMany(mappedBy="thread")
+	@OneToMany(mappedBy = "thread")
 	private List<Post> posts;
-	
+
 	public Thread() {
 		super();
 	}
+
 	public Thread(int id, List<Tag> tags, String title, List<Post> posts) {
 		super();
 		this.id = id;
@@ -50,26 +52,30 @@ public class Thread {
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public List<Tag> getTags() {
 		return tags;
 	}
+
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	@Override
 	public String toString() {
 		return "Thread [id=" + id + ", tags=" + tags + ", title=" + title + ", posts=" + posts + "]";
 	}
-	
-	
-	
+
 }
