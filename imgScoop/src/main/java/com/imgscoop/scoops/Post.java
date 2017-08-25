@@ -1,6 +1,5 @@
 package com.imgscoop.scoops;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 public class Post {
@@ -8,14 +7,14 @@ public class Post {
 	private int threadId;
 	private User author;
 	private String body;
-	private Blob image;
+	private byte[] image;
 	private Timestamp submitted;
 
 	public Post() {
 		super();
 	}
 
-	public Post(int id, int threadId, User author, String body, Blob image, Timestamp submitted) {
+	public Post(int id, int threadId, User author, String body, byte[] image, Timestamp submitted) {
 		super();
 		this.id = id;
 		this.threadId = threadId;
@@ -57,11 +56,11 @@ public class Post {
 		this.body = body;
 	}
 
-	public Blob getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Blob image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
