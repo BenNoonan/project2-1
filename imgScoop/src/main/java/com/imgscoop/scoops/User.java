@@ -11,23 +11,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="USER")
+@Table(name="scoop_user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="USER_ID")
+	@Column(name="user_id")
 	private int id;
-	@Column(name="USER_USERNAME")
+	@Column(name="user_username")
 	private String username;
-	@Column(name="USER_EMAIL")
+	@Column(name="user_email")
 	private String email;
-	@Column(name="USER_PASSWORD")
+	@Column(name="user_password")
 	private String password;
-	@Column(name="USER_ROLE")
-	@OneToMany(mappedBy="user")
+	@Column(name="user_role")
 	private Role role;
-	@Column(name="USER_POSTS")
+	@Column(name="user_posts")
 	@OneToMany(mappedBy="user")
 	private List<Post> posts;
 	

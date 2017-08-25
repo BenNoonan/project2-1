@@ -7,21 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="THREAD")
+@Table(name="scoop_thread")
 public class Thread {
 
 	@Id
-	@Column(name="THREAD_ID")
+	@Column(name="thread_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	@ManyToMany(mappedBy="thread")
-	private Tag tags;
-	@Column(name="TITLE")
+	@ManyToMany(mappedBy="threads")
+	@JoinTable(name="thread_tags")
+	private List<Tag> tags;
+	@Column(name="thread_title")
 	private String title;
 	@OneToMany(mappedBy="thread")
 	private List<Post> posts;
@@ -29,7 +31,7 @@ public class Thread {
 	public Thread() {
 		super();
 	}
-	public Thread(int id, Tag tags, String title, List<Post> posts) {
+	public Thread(int id, List<Tag> tags, String title, List<Post> posts) {
 		super();
 		this.id = id;
 		this.tags = tags;
@@ -51,10 +53,10 @@ public class Thread {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Tag getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
-	public void setTags(Tag tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 	public String getTitle() {
