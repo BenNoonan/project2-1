@@ -2,25 +2,45 @@ package com.imgscoop.scoops;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Scoop_Post")
 public class Post {
+	@Id
+	@Column(name = "post_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private int threadId;
-	private User author;
+	@ManyToOne
+	private User user;
+	@Column(name="contents")
 	private String body;
+	@Column(name="image_data")
 	private byte[] image;
+	@ManyToOne
+	@JoinColumn(nullable=false, name="thread_id")
+	private Thread thread;
+	@Column
 	private Timestamp submitted;
 
 	public Post() {
 		super();
 	}
 
-	public Post(int id, int threadId, User author, String body, byte[] image, Timestamp submitted) {
+	public Post(int id, User user, String body, byte[] image, Thread thread, Timestamp submitted) {
 		super();
 		this.id = id;
-		this.threadId = threadId;
-		this.author = author;
+		this.user = user;
 		this.body = body;
 		this.image = image;
+		this.thread = thread;
 		this.submitted = submitted;
 	}
 
@@ -32,20 +52,12 @@ public class Post {
 		this.id = id;
 	}
 
-	public int getThreadId() {
-		return threadId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setThreadId(int threadId) {
-		this.threadId = threadId;
-	}
-
-	public User getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getBody() {
@@ -62,6 +74,14 @@ public class Post {
 
 	public void setImage(byte[] image) {
 		this.image = image;
+	}
+
+	public Thread getThread() {
+		return thread;
+	}
+
+	public void setThread(Thread thread) {
+		this.thread = thread;
 	}
 
 	public Timestamp getSubmitted() {
