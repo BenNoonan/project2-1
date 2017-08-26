@@ -36,9 +36,10 @@ public class PostDAOImpl implements PostDAO {
 		return sessionFactory.getCurrentSession().createQuery("from Post where thread_id=:id").setParameter("id", thread.getId()).list();
 	}
 
+	
+	@SuppressWarnings("unchecked")
 	public List<Post> getByUser(User author) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Post where user_user_id=:id").setParameter("id", author.getId()).list();
 	}
 	
 	@SuppressWarnings("unchecked")
