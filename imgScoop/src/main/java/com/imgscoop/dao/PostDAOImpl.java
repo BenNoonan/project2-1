@@ -2,15 +2,15 @@ package com.imgscoop.dao;
 
 import java.util.List;
 
+
 import org.hibernate.SessionFactory;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imgscoop.scoops.Post;
 import com.imgscoop.scoops.Thread;
 import com.imgscoop.scoops.User;
 
+@Transactional
 public class PostDAOImpl implements PostDAO {
 
 	private SessionFactory sessionFactory;
@@ -19,29 +19,31 @@ public class PostDAOImpl implements PostDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	@Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public void create(Post post) {
 		sessionFactory.getCurrentSession().save(post);
 	}
 
-	@Transactional
 	public void delete(Post post) {
 		sessionFactory.getCurrentSession().delete(post);
 	}
 
 	public void update(Post post) {
-		// TODO Auto-generated method stub
-
+		sessionFactory.getCurrentSession().saveOrUpdate(post);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Post> getByThread(Thread thread) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Post where thread_id=:id").setParameter("id", thread.getId()).list();
 	}
 
 	public List<Post> getByUser(User author) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Post> getAll(){
+		return sessionFactory.getCurrentSession().createCriteria(Post.class).list();
 	}
 
 }

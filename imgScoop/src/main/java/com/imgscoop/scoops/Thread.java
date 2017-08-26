@@ -26,7 +26,7 @@ public class Thread {
 	private List<Tag> tags;
 	@Column(name = "thread_title")
 	private String title;
-	@OneToMany(mappedBy = "thread")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "thread")
 	private List<Post> posts;
 
 	public Thread() {

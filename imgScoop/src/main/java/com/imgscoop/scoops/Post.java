@@ -1,6 +1,7 @@
 package com.imgscoop.scoops;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Scoop_Post")
+@Table(name = "Scoop_Post")
 public class Post {
 	@Id
 	@Column(name = "post_id")
@@ -20,12 +21,12 @@ public class Post {
 	private int id;
 	@ManyToOne
 	private User user;
-	@Column(name="contents")
+	@Column(name = "contents")
 	private String body;
-	@Column(name="image_data")
+	@Column(name = "image_data")
 	private byte[] image;
 	@ManyToOne
-	@JoinColumn(nullable=false, name="thread_id")
+	@JoinColumn(nullable = false, name = "thread_id")
 	private Thread thread;
 	@Column
 	private Timestamp submitted;
@@ -90,6 +91,12 @@ public class Post {
 
 	public void setSubmitted(Timestamp submitted) {
 		this.submitted = submitted;
+	}
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", user=" + user.getUsername() + ", body=" + body + ", image=" + Arrays.toString(image)
+				+ ", thread=" + thread.getTitle() + ", submitted=" + submitted + "]";
 	}
 
 }

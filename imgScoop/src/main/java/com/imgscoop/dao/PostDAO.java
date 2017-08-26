@@ -17,5 +17,7 @@ public interface PostDAO {
 	public List<Post> getByThread(Thread thread);
 
 	public List<Post> getByUser(User author);
+	
+	public List<Post> getAll();
 
 }
