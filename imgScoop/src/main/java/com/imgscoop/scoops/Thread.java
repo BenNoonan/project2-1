@@ -13,6 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "scoop_thread")
 public class Thread {
@@ -22,6 +27,7 @@ public class Thread {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE) //?????????????
 	@JoinTable(name = "thread_tags")
 	private List<Tag> tags;
 	@Column(name = "thread_title")
