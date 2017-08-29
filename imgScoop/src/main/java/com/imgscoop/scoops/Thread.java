@@ -90,9 +90,4 @@ public class Thread{
 	public String toString() {
 		return "Thread [id=" + id + ", tags=" + tags + ", title=" + title + ", posts=" + posts + "]";
 	}
-	
-	
-	
-	
-
 }
