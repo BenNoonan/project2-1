@@ -20,7 +20,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "scoop_thread")
-public class Thread {
+public class Thread{
 
 	@Id
 	@Column(name = "thread_id")
@@ -42,6 +42,13 @@ public class Thread {
 	public Thread(int id, List<Tag> tags, String title, List<Post> posts) {
 		super();
 		this.id = id;
+		this.tags = tags;
+		this.title = title;
+		this.posts = posts;
+	}
+
+	public Thread(List<Tag> tags, String title, List<Post> posts) {
+		super();
 		this.tags = tags;
 		this.title = title;
 		this.posts = posts;
@@ -83,5 +90,4 @@ public class Thread {
 	public String toString() {
 		return "Thread [id=" + id + ", tags=" + tags + ", title=" + title + ", posts=" + posts + "]";
 	}
-
 }
