@@ -21,48 +21,49 @@ public class PostDAOTests {
 	
 	private static PostDAO dao;
 	private static AbstractApplicationContext context;
-	private static User testUser;
-	private static Thread testThread;
-	private static Post testPost;
-	private static Thread testThread1;
-	private static Post testPost1;
+	private static User adminUser;
+	private static User ordUser;
+	// Thread used for readBy*Tests
+	private static Thread dummyThread;
+	// Thread and post used for the create/delete tests
+	private static Thread cdThread;
+	private static Post cdPost;
 	
 	@BeforeClass
 	public static void initTests(){
 		context = new ClassPathXmlApplicationContext("spring-config.xml");
 		dao = (PostDAO) context.getBean("postDAO");
-		testUser = new User(1,"BBOSS", "BIGBOSS@MOTHERBASE.NET",new Role(1,"ADMIN"), null);
-		testThread = new Thread(1, null, "Free Hamburgers on Deck 1", null);
-		testPost = new Post(1, testUser, "Kaz made some good ass hamburgers. Come get 'em while they're hot", new byte[1], testThread, new Timestamp(System.currentTimeMillis()));
-		testThread1 = new Thread(2, null, "Anyone seen Quiet?", null);
-		testPost1 = new Post(2, testUser, "I knwo she's invisible but c'mon", new byte[1], testThread1, new Timestamp(System.currentTimeMillis()));
+		adminUser = new User(1, "bigboss", "bigboss@motherbase.net", new Role(1, "Admin"), null);
+		ordUser = new User(2, "kmillz", "millersama@motherbase.net", new Role(2, "User"), null);
+		dummyThread = new Thread(1, null, "Dummy Thread", null);
+		cdThread = new Thread(2, null, "Free Hamburgers on Deck 1", null);
+		cdPost = new Post(adminUser, "Good dang old hambagahs", new byte[1], cdThread, new Timestamp(System.currentTimeMillis()));
 	}
 
 	@Test
 	public void createTest(){
-		dao.create(testPost);
-		dao.create(testPost1);
-		assertEquals(2, dao.getAll().size());
+		dao.create(cdPost);
+		assertEquals(5, dao.getAll().size());
 	}
 	
 	@Test
 	public void getByThreadTest(){
-		List<Post> posts = dao.getByThread(testThread);
+		List<Post> posts = dao.getByThread(dummyThread);
 		System.out.println(posts);
-		assertEquals(1, posts.size());
+		assertEquals(2, posts.size());
 	}
 	
 	@Test
 	public void getByAuthorTest(){
-		List<Post> posts = dao.getByUser(testUser);
+		List<Post> posts = dao.getByUser(ordUser);
+		System.out.println(posts);
 		assertEquals(2, posts.size());
 	}
 	
 	@Test
 	public void deleteTest() {
-		dao.delete(testPost);
-		dao.delete(testPost1);
-		assertEquals(0, dao.getAll().size());
+		dao.delete(cdPost);
+		assertEquals(4, dao.getAll().size());
 	}
 	
 }

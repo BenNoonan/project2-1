@@ -44,6 +44,15 @@ public class Post {
 		this.thread = thread;
 		this.submitted = submitted;
 	}
+	
+	public Post(User user, String body, byte[] image, Thread thread, Timestamp submitted) {
+		super();
+		this.user = user;
+		this.body = body;
+		this.image = image;
+		this.thread = thread;
+		this.submitted = submitted;
+	}
 
 	public int getId() {
 		return id;
