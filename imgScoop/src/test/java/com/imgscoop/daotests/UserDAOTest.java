@@ -38,36 +38,42 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void createUser(){
 		dao.create(user);
 		assertEquals(3, dao.findByAll().size());
 	}
 	
 	@Test
+	@Ignore
 	public void updateUser(){
 		dao.update(user);
 		assertEquals(user.getUsername().toString(), "User Update test");
 	}
 	
 	@Test
+	@Ignore
 	public void deleteUser(){
 		dao.delete(user);
 		assertEquals(2, dao.findByAll().size());
 	}
 	
 	@Test
+	@Ignore
 	public void allUser(){
 		List<User> userList = dao.findByAll();
 		assertEquals(3, userList.size());
 	}
 	
 	@Test
+	@Ignore
 	public void usernameUser(){
 		User userName = dao.findByUsername("kmillz");
 		assertEquals(userName.getUsername(), "kmillz");
 	}
 	
 	@Test
+	@Ignore
 	public void roleUser(){
 		List<User> userRole = dao.findByRole(new Role(1, "Admin"));
 		assertEquals(userRole.get(0).getUsername(), "bigboss");
