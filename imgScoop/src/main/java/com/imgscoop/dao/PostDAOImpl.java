@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imgscoop.scoops.Post;
@@ -33,13 +34,13 @@ public class PostDAOImpl implements PostDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Post> getByThread(Thread thread) {
-		return sessionFactory.getCurrentSession().createQuery("from Post where thread_id=:id").setParameter("id", thread.getId()).list();
+		return sessionFactory.getCurrentSession().createCriteria(Post.class).add(Restrictions.eq("thread", thread)).list();
 	}
 
 	
 	@SuppressWarnings("unchecked")
-	public List<Post> getByUser(User author) {
-		return sessionFactory.getCurrentSession().createQuery("from Post where user_user_id=:id").setParameter("id", author.getId()).list();
+	public List<Post> getByUser(User user) {
+		return sessionFactory.getCurrentSession().createCriteria(Post.class).add(Restrictions.eq("user", user)).list();
 	}
 	
 	@SuppressWarnings("unchecked")

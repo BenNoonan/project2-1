@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,13 +22,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private int id;
-	@Column(name = "user_username")
+	@Column(name = "username")
 	private String username;
-	@Column(name = "user_email")
+	@Column(name = "email")
 	private String email;
-	@Column(name = "user_password")
+	@Column(name = "password")
 	private String password;
 	@ManyToOne
+	@JoinColumn(name="role_id")
 	private Role role;
 	@Column(name = "user_posts")
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
