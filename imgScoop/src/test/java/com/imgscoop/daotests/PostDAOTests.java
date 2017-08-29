@@ -42,21 +42,21 @@ public class PostDAOTests {
 
 	@Test
 	public void createTest(){
+		System.out.println("Before "+cdPost);
 		dao.create(cdPost);
+		System.out.println("After "+cdPost);
 		assertEquals(5, dao.getAll().size());
 	}
 	
 	@Test
 	public void getByThreadTest(){
 		List<Post> posts = dao.getByThread(dummyThread);
-		System.out.println(posts);
 		assertEquals(2, posts.size());
 	}
 	
 	@Test
-	public void getByAuthorTest(){
+	public void getByUserTest(){
 		List<Post> posts = dao.getByUser(ordUser);
-		System.out.println(posts);
 		assertEquals(2, posts.size());
 	}
 	

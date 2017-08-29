@@ -52,7 +52,7 @@ public class User {
 		this.posts = posts;
 	}
 
-	public User(String username, String email, Role role, List<Post> posts) {
+	public User(int id, String username, String email, Role role, List<Post> posts) {
 		super();
 		this.username = username;
 		this.email = email;
