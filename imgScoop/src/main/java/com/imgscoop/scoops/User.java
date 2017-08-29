@@ -22,9 +22,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private int id;
-	@Column(name = "username")
+	@Column(name = "username", unique=true)
 	private String username;
-	@Column(name = "email")
+	@Column(name = "email", unique=true)
 	private String email;
 	@Column(name = "password")
 	private String password;
@@ -54,9 +54,17 @@ public class User {
 
 	public User(int id, String username, String email, Role role, List<Post> posts) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.email = email;
+		this.role = role;
+		this.posts = posts;
+	}
+
+	public User(String username, String email, String password, Role role, List<Post> posts) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
 		this.role = role;
 		this.posts = posts;
 	}
