@@ -17,50 +17,51 @@ import com.imgscoop.scoops.Role;
 import com.imgscoop.scoops.User;
 
 @Controller
+@RequestMapping(value="/user")
 public class UserController {
 	
 	@Autowired
 	private UserDAO dao;
 	
-	public UserController(UserDAO dao) {
+	public void setDao(UserDAO dao) {
 		this.dao = dao;
 	}
-	
-	@RequestMapping(value="/user", method=RequestMethod.POST,
+
+	@RequestMapping(method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void create(@Valid @RequestBody User user){
 		dao.create(user);
 	}
 	
-	@RequestMapping(value="/user", method=RequestMethod.DELETE,
+	@RequestMapping(method=RequestMethod.DELETE,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void delete(@RequestBody User user){
 		dao.delete(user);
 	}
-	@RequestMapping(value="/user", method=RequestMethod.DELETE,
+	@RequestMapping(method=RequestMethod.PUT,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void update(User user){
 		dao.update(user);
 	}
 	
-	@RequestMapping(value="/user/all", method=RequestMethod.DELETE,
-			consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/all", method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<User> findByAll(){
 		return dao.findByAll();
 	}
 	
-	@RequestMapping(value="/user/username", method=RequestMethod.DELETE,
-			consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/username", method=RequestMethod.DELETE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public User findByUsername(String username){
 		return dao.findByUsername(username);
 	}
 	
-	@RequestMapping(value="/user/role", method=RequestMethod.POST,
+	@RequestMapping(value="/role", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<User> findByRole(Role role){

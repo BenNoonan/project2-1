@@ -16,43 +16,45 @@ import com.imgscoop.scoops.Thread;
 import com.imgscoop.dao.ThreadDAO;
 
 @Controller
+@RequestMapping(value="/thread")
 public class ThreadController {
 
 	@Autowired
 	private ThreadDAO dao;
 
-	public ThreadController(ThreadDAO dao) {
+	public void setDao(ThreadDAO dao) {
 		this.dao = dao;
 	}
-	@RequestMapping(value="/thread/create", method=RequestMethod.POST,
+
+	@RequestMapping(method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void create(@Valid @RequestBody Thread thread){
 		dao.create(thread);
 	}
 	
-	@RequestMapping(value="/thread/delete", method=RequestMethod.DELETE,
+	@RequestMapping(method=RequestMethod.DELETE,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void delete(@RequestBody Thread thread){
 		dao.delete(thread);
 	}
 	
-	@RequestMapping(value="/thread/update", method=RequestMethod.PUT,
+	@RequestMapping(method=RequestMethod.PUT,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void update(@RequestBody Thread thread){
 		dao.update(thread);
 	}
 	
-	@RequestMapping(value="/thread/all", method=RequestMethod.GET,
+	@RequestMapping(value="/all", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Thread> findByAll(){
 		return dao.findByAll();
 	}
 	
-	@RequestMapping(value="/thread/title", method=RequestMethod.GET,
+	@RequestMapping(value="/title", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Thread> findByTitle(@RequestBody String title){
@@ -62,7 +64,7 @@ public class ThreadController {
 	//@ResponseBody
 	//public List<Thread> findByTag(){}
 	
-	@RequestMapping(value="/thread/page", method=RequestMethod.GET,
+	@RequestMapping(value="/page", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Thread> findByPage(int page){
