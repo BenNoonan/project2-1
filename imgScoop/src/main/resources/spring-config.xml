@@ -41,7 +41,7 @@
 	<bean name="postDAO" class="com.imgscoop.dao.PostDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<bean name="threadDAO" class="com.imgscoop.dao.ThreadDAOImpl">
+	<bean name="threadDAOImpl" class="com.imgscoop.dao.ThreadDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean name="userDAO" class="com.imgscoop.dao.UserDAOImpl">
