@@ -89,4 +89,16 @@ public class ThreadDAOTest {
 		List<Thread> threads  = dao.findByPage(0);
 		assertEquals(2, threads.size());
 	}
+	
+	@Test
+	@Ignore
+	//Creating a bunch of threads
+	public void multiThreadCreation(){
+		for(int i=0; i < 16; i++){
+			dao.create(new Thread(null, ("Test " + i), null));
+		}
+		//List<Thread> threads = dao.findByAll();
+		//System.out.println(threads);
+		//assertEquals(3, threads.size());
+	}
 }

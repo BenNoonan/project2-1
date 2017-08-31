@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.junit.experimental.theories.ParametersSuppliedBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,10 +67,10 @@ public class ThreadController {
 	//@ResponseBody
 	//public List<Thread> findByTag(){}
 	
-	@RequestMapping(value="/page", method=RequestMethod.GET,
+	@RequestMapping(value="/page/{page}", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Thread> findByPage(int page){
+	public List<Thread> findByPage(@PathVariable int page){
 		return dao.findByPage(page);
 	}
 }
