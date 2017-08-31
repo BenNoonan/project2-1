@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,10 @@ public class PostDAOImpl implements PostDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	public long countRows(){
+		return (Long) sessionFactory.getCurrentSession().createCriteria(Post.class).setProjection(Projections.rowCount()).uniqueResult();
+	}
+	
 	public void create(Post post) {
 		sessionFactory.getCurrentSession().save(post);
 	}
@@ -31,12 +36,6 @@ public class PostDAOImpl implements PostDAO {
 	public void update(Post post) {
 		sessionFactory.getCurrentSession().saveOrUpdate(post);
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<Post> getByThread(Thread thread) {
-		return sessionFactory.getCurrentSession().createCriteria(Post.class).add(Restrictions.eq("thread", thread)).list();
-	}
-
 	
 	@SuppressWarnings("unchecked")
 	public List<Post> getByUser(User user) {
@@ -46,6 +45,11 @@ public class PostDAOImpl implements PostDAO {
 	@SuppressWarnings("unchecked")
 	public List<Post> getAll(){
 		return sessionFactory.getCurrentSession().createCriteria(Post.class).list();
+	}
+
+	public List<Post> getByThread(Thread thread) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

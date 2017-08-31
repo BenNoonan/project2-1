@@ -18,9 +18,9 @@
 		<!-- Ex: index.html is found at 
 				 http://localhost:8080/proj/index.html instead of 
 				 http://localhost:8080/proj/static/index.html -->
-		<!-- given a string ex: "home", it is resolved to /pages/home/html -->
+		<!-- given a string ex: "home", it is resolved to /pages/home.html -->
 	</bean>
 	
-	<context:component-scan base-package="com.imgscoop.controllers" />
+	<context:component-scan base-package="com.imgscoop.*" />
 
 </beans>

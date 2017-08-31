@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "scoop_user")
 public class User {
@@ -33,6 +35,7 @@ public class User {
 	private Role role;
 	@Column(name = "user_posts")
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
 	private List<Post> posts;
 
 	public User() {
