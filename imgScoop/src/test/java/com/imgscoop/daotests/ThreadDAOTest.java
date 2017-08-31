@@ -17,12 +17,12 @@ import com.imgscoop.scoops.Thread;
 import com.imgscoop.scoops.User;
 
 public class ThreadDAOTest {
-	
-	private static AbstractApplicationContext context;
-	private static ThreadDAO dao;
-	private static User user;
-	private static Thread testCreateThread, testReadThread;
-	private static int temp;
+    
+    private static AbstractApplicationContext context;
+    private static ThreadDAO dao;
+    private static User user;
+    private static Thread testCreateThread, testReadThread;
+    private static int temp;
 
 	@BeforeClass
 	public static void initTest(){

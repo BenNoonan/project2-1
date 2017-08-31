@@ -13,6 +13,8 @@ public interface PostDAO {
 	public void delete(Post post);
 
 	public void update(Post post);
+	
+	public long countRows();
 
 	public List<Post> getByThread(Thread thread);
 
