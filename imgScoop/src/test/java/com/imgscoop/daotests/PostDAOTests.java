@@ -42,9 +42,7 @@ public class PostDAOTests {
 
 	@Test
 	public void createTest(){
-		System.out.println("Before "+cdPost);
 		dao.create(cdPost);
-		System.out.println("After "+cdPost);
 		assertEquals(5, dao.getAll().size());
 	}
 	

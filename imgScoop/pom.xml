@@ -8,7 +8,6 @@
 	<name>proj Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-
 		<dependency>
 			<groupId>de.svenkubiak</groupId>
 			<artifactId>jBCrypt</artifactId>
@@ -159,7 +158,7 @@
 						<url>http://localhost:8080/manager/text</url>
 						<update>true</update>
 						<server>jenkins-bot</server> <!-- /conf/settings.xml -->
-						<path>/</path> <!-- Where to deploy app  (context root) -->
+						<path>/</path> <!-- Where to deploy app (context root) -->
 					</configuration>
 				</plugin>
 			</plugins>

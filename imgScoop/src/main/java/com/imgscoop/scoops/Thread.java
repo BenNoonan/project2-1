@@ -18,6 +18,8 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "scoop_thread")
 public class Thread{
@@ -29,10 +31,12 @@ public class Thread{
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE) //?????????????
 	@JoinTable(name = "thread_tags")
+	@JsonIgnore
 	private List<Tag> tags;
 	@Column(name = "thread_title")
 	private String title;
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "thread")
+	@JsonIgnore
 	private List<Post> posts;
 
 	public Thread() {
