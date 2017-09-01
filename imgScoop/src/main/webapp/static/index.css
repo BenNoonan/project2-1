@@ -10,3 +10,13 @@
   #modal-signin {
   	
   }
+  
+  #form-signin {
+  	padding-top: 3%;
+  	padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+  #form-signin-no{
+  	padding-right: 10%; 
+  }
