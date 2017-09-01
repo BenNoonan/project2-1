@@ -6,13 +6,17 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.imgscoop.scoops.Post;
 import com.imgscoop.scoops.Thread;
 import com.imgscoop.scoops.User;
 
-@Transactional
+@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+@Repository
 public class PostDAOImpl implements PostDAO {
 
 	private SessionFactory sessionFactory;

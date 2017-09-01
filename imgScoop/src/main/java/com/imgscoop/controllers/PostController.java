@@ -29,14 +29,14 @@ public class PostController {
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<Post> create(@Valid @RequestBody Post post) {
+	public ResponseEntity<Void> create(@Valid @RequestBody Post post) {
 		System.out.println("in the create with " + post);
 		return service.create(post);
 	}
 
 	@RequestMapping(method=RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<Void> delete(@Valid @RequestBody Post post){
+	public ResponseEntity<Void> delete(@Valid @RequestBody Post post, HttpServletRequest req){
 		return service.delete(post);
 	}
 	

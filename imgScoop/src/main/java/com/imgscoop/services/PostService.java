@@ -26,37 +26,30 @@ public class PostService {
 	}
 
 	/**
-	 * Assumes that the post already contains the user and the thread objects.
+	 * TODO: Assumes that the post already contains the user and the thread objects.
 	 * Change it to expect the user/author in the session, so that we can do
 	 * more authorization stuff. (Mainly that if you're not signed in, you can't
-	 * post)
+	 * post). Add the return for if a create fails 
 	 * 
-	 * @param post
-	 * @return
 	 */
-	public ResponseEntity<Post> create(Post post) {
+	public ResponseEntity<Void> create(Post post) {
 		dao.create(post);
-		return new ResponseEntity<Post>(post, HttpStatus.I_AM_A_TEAPOT);
+		return new ResponseEntity<Void>(HttpStatus.I_AM_A_TEAPOT);
 	}
 
 	/**
-	 * Add authorization. Mainly so that if you're not signed in to an
+	 * TODO: Add authorization. Mainly so that if you're not signed in to an
 	 * admin account, you can't delete posts
 	 * 
-	 * @param post
-	 * @return
 	 */
 	public ResponseEntity<Void> delete(Post post) {
 		try {
-			long before = dao.countRows();
 			dao.delete(post);
-			long after = dao.countRows();
-			if (before == after + 1)
-				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			System.out.println("Exception space");
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
 
 }

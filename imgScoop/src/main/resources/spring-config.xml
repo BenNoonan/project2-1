@@ -38,7 +38,7 @@
 	</bean>
 	
 	<!-- 4. DAO -->
-	<bean name="postDAO" class="com.imgscoop.dao.PostDAOImpl">
+	<bean name="postDAOImpl" class="com.imgscoop.dao.PostDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean name="threadDAOImpl" class="com.imgscoop.dao.ThreadDAOImpl">
