@@ -1,5 +1,6 @@
 package com.imgscoop.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -30,6 +31,7 @@ public class PostDAOImpl implements PostDAO {
 	}
 	
 	public void create(Post post) {
+		post.setSubmitted(new Timestamp(System.currentTimeMillis()));
 		sessionFactory.getCurrentSession().save(post);
 	}
 

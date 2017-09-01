@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.imgscoop.scoops.Post;
 import com.imgscoop.scoops.Tag;
 import com.imgscoop.scoops.Thread;
 

@@ -13,12 +13,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Sort;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "scoop_thread")
@@ -31,12 +29,11 @@ public class Thread{
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE) //?????????????
 	@JoinTable(name = "thread_tags")
-	@JsonIgnore
 	private List<Tag> tags;
 	@Column(name = "thread_title")
 	private String title;
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "thread")
-	@JsonIgnore
+	@Sort(comparator=PostComparator.class)
 	private List<Post> posts;
 
 	public Thread() {

@@ -22,6 +22,7 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 	@Column(name = "contents")
 	private String body;
@@ -29,6 +30,7 @@ public class Post {
 	private byte[] image;
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "thread_id")
+	@JsonIgnore
 	private Thread thread;
 	@Column
 	private Timestamp submitted;
