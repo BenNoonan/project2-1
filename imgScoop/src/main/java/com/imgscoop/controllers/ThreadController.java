@@ -64,6 +64,7 @@ public class ThreadController {
 	
 	//@ResponseBody
 	//public List<Thread> findByTag(){}
+	
 	@RequestMapping(value="/page/{page}", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
