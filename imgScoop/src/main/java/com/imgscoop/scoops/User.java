@@ -49,7 +49,7 @@ public class User {
 		this.id = id;
 		this.username = username;
 		this.email = email;
-		this.password = password;
+		this.password = Cryptor.encrypt(password);
 		this.role = role;
 		this.posts = posts;
 	}
