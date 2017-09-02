@@ -3,7 +3,6 @@ package com.imgscoop.dao;
 import java.util.List;
 
 import com.imgscoop.scoops.Post;
-import com.imgscoop.scoops.User;
 import com.imgscoop.scoops.Thread;
 
 public interface PostDAO {
@@ -16,10 +15,10 @@ public interface PostDAO {
 	
 	public long countRows();
 
-	public List<Post> getByThread(Thread thread);
-
-	public List<Post> getByUser(User author);
+	public List<Post> getByUsername(String author);
 	
 	public List<Post> getAll();
+
+	public List<Post> getByThread(Thread thread);
 
 }
