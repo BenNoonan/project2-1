@@ -1,7 +1,6 @@
 package com.imgscoop.daotests;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -54,7 +53,7 @@ public class PostDAOTests {
 	
 	@Test
 	public void getByUserTest(){
-		List<Post> posts = dao.getByUser(ordUser);
+		List<Post> posts = dao.getByUsername(ordUser.getUsername());
 		assertEquals(2, posts.size());
 	}
 	

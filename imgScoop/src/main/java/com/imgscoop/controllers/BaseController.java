@@ -1,6 +1,8 @@
 package com.imgscoop.controllers;
 
+import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +18,7 @@ import com.imgscoop.services.UserService;
 
 @Controller
 public class BaseController {
-	
+
 	@Autowired
 	private UserService service;
 
@@ -24,19 +26,25 @@ public class BaseController {
 		this.service = service;
 	}
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public void loadMain(HttpServletRequest req, HttpServletResponse resp){
+	
+	/**
+	 * Landing page setup to load index by default
+	 */
+	@RequestMapping(value ="/", method = RequestMethod.GET)
+	public void loadMain(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			req.getRequestDispatcher("/index.html").forward(req, resp);
-		} catch (Exception e) {
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<User> login(HttpServletRequest req, HttpServletResponse resp){
-		return service.login(req, resp);
+	public ResponseEntity<User> login(HttpServletRequest req) {
+		return service.login(req);
 	}
-	
+
 }

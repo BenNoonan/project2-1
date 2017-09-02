@@ -40,10 +40,7 @@ public class User {
 	public User() {
 		super();
 	}
-
-	/*
-	 * TODO implementation with JDBCrypt for password initiation
-	 */
+	
 	public User(int id, String username, String email, String password, Role role, List<Post> posts) {
 		super();
 		this.id = id;
@@ -123,6 +120,10 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email + ", role=" + role + ", posts=" + posts
 				+ "]";
+	}
+
+	public void hashPass() {
+		this.password = Cryptor.encrypt(this.password);
 	}
 
 }

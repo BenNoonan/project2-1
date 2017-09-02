@@ -1,13 +1,11 @@
 package com.imgscoop.services;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,7 @@ public class UserService {
 	
 	//TODO: Password Encryption
 	public ResponseEntity<User> create(User user) {
+		user.hashPass();
 		try {
 			dao.create(user);
 			return new ResponseEntity<User>(user, HttpStatus.CREATED);
@@ -85,30 +84,25 @@ public class UserService {
 	}
 
 	//TODO: Implement the password checking (dependent on the User bean having the password encryption
-	public ResponseEntity<User> login(HttpServletRequest req, HttpServletResponse resp) {
+	public ResponseEntity<User> login(HttpServletRequest req) {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		System.out.println(username + password);
-		/** Option 1:
-		 * 	-- Check to see if the either of the parameters are null or empty
-		 * 	|---- If one or both are, then immediately return a bad request 
-		 */
 		ResponseEntity<User> response = this.findByUsername(username);
-		/** Option 2:
-		 * 	-- Check the status code of the above response
-		 * 	|---- If it's a OK, then the user was found and we can continue the code
-		 * 	|---- If it's a NOT_FOUND, then return a BAD_REQUEST
+		/** -- Check the status code of the above response
+		 * 	 |--- If it's a OK, then the user was found and we can continue the code
+		 * 	 |--- If it's a NOT_FOUND, then return a BAD_REQUEST
 		 */
+		if (response.getStatusCode().value() != 200) {
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
 		User user = response.getBody();
 		if(user.getPassword().equals(password)){
 			user.setPassword(null);
 			req.getSession().setAttribute("loggedin", user);
-			try {
-				resp.sendRedirect("index.html");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", "index.html");
+			return new ResponseEntity<User>(user, headers, HttpStatus.FOUND);
 		} else {
 			req.getSession().setAttribute("loggedin", false);
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);

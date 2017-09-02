@@ -22,7 +22,6 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@ManyToOne
-	@JsonIgnore
 	private User user;
 	@Column(name = "contents")
 	private String body;

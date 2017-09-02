@@ -1,5 +1,7 @@
 package com.imgscoop.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,10 @@ public class PostService {
 			System.out.println("Exception space");
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	public ResponseEntity<List<Post>> findByUsername(String username) {
+		return new ResponseEntity<List<Post>>(dao.getByUsername(username), HttpStatus.OK);
 	}
 
 }
