@@ -1,1 +1,18 @@
-<p>This is thread view</p>
+
+<p>All Threads</p>
+<div class="panel-body" ng-controller="listThread">
+		<table class="table table-hover">
+			<tr ng-repeat="t in displayAllThread">
+				<td>{{t.title}}</td>
+			</tr>
+		</table>
+	<ul class="pager">
+	<div ng-if="bool >= 0">
+		<li class="next" ng-click="pageNext()"><a href="">Next</a></li>
+	</div>
+	<div ng-if="bool <= 0">
+		<li class="next" ng-click="pagePrev()"><a href="">Previous</a></li>
+	</div>
+	</ul>
+	<p>
+</div>
