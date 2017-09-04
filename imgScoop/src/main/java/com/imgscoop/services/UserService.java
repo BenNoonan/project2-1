@@ -87,7 +87,6 @@ public class UserService {
 	public ResponseEntity<User> login(HttpServletRequest req) {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		System.out.println(username + password);
 		ResponseEntity<User> response = this.findByUsername(username);
 		/** -- Check the status code of the above response
 		 * 	 |--- If it's a OK, then the user was found and we can continue the code
@@ -100,9 +99,7 @@ public class UserService {
 		if(user.getPassword().equals(password)){
 			user.setPassword(null);
 			req.getSession().setAttribute("loggedin", user);
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Location", "index.html");
-			return new ResponseEntity<User>(user, headers, HttpStatus.FOUND);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		} else {
 			req.getSession().setAttribute("loggedin", false);
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);

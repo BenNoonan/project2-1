@@ -1,11 +1,31 @@
 var app = angular.module('imgScoopApi', [ 'ui.router' ])
 
-app.controller("MainCtrl", function($scope) {
+app.controller("MainCtrl", function($rootScope, $scope, $http) {
 	// Creating threads here
 	// Logging in here
-	$scope.clickUsername = function(username) {
-		$scope.clicked = username;
-	}
+	$scope.login = function(){
+		$http({
+			method: "POST",
+			url: "/login",
+			params: {"username": $scope.username, "password": $scope.password}
+		}).then(function(value) {
+			$rootScope.loggedin = value.data;
+			console.log($rootScope.loggedin);
+		}, function(reason) {
+			// Invalid username or password
+			console.log("failed" + reason);
+		}, function(value) {
+			console.log("default" + value);
+		});
+	};
+	$scope.logout = function(){
+		$http({
+			method: "POST",
+			url: "/logout"
+		}).then(function(value) {
+			$rootScope.loggedin = undefined;
+		});
+	};
 	console.log("In the main ctrl");
 });
 
@@ -15,10 +35,6 @@ app.controller("ThreadCtrl", function() {
 });
 
 app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
-	// Viewing an individual profile here
-	// When we remove the json ignores, we can get remove this first http call
-	// and keep the second to get this specific user by his user name
-	console.log();
 	$http({
 		method : 'GET',
 		url : '/post/user/' + $stateParams.username
