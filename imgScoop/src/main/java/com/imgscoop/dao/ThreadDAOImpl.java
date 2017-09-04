@@ -64,4 +64,10 @@ public class ThreadDAOImpl implements ThreadDAO {
 		return sessionFactory.getCurrentSession().createQuery("from Thread").setFirstResult(page).setMaxResults(15)
 				.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Thread> findById(int id) {
+		return sessionFactory.getCurrentSession().createCriteria(Thread.class).add(Restrictions.eq("id", id)).list();
+	}
 }

@@ -71,4 +71,11 @@ public class ThreadController {
 	public List<Thread> findByPage(@PathVariable int page){
 		return dao.findByPage(page);
 	}
+	
+	@RequestMapping(value="/id={id}", method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Thread>findById(@PathVariable int id){
+		return dao.findById(id);
+	}
 }
