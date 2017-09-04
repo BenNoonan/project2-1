@@ -1,8 +1,9 @@
-var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ])
+var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
-app.controller("MainCtrl", function($rootScope, $scope, $http) {
+app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 	// Creating threads here
 	// Logging in here
+	$rootScope.loggedin = JSON.parse($window.localStorage.getItem('loggedin'))
 	$scope.login = function() {
 		$http({
 			method : "POST",
@@ -12,8 +13,8 @@ app.controller("MainCtrl", function($rootScope, $scope, $http) {
 				"password" : $scope.password
 			}
 		}).then(function(value) {
-			$rootScope.loggedin = value.data;
-			console.log($rootScope.loggedin);
+			$window.localStorage.setItem('loggedin', JSON.stringify(value.data))
+			$rootScope.loggedin = JSON.parse($window.localStorage.getItem('loggedin'));
 		}, function(reason) {
 			// Invalid username or password
 			console.log("failed" + reason);
@@ -26,7 +27,8 @@ app.controller("MainCtrl", function($rootScope, $scope, $http) {
 			method : "POST",
 			url : "/logout"
 		}).then(function(value) {
-			$rootScope.loggedin = undefined;
+			$window.localStorage.removeItem('loggedin');
+			$rootScope.loggedin = null;
 		});
 	};
 	console.log("In the main ctrl");
@@ -82,7 +84,6 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 	})
 	//Image uploading and posting
 	$scope.post = function() {
-		console.log($scope.image == undefined)
 		if ($scope.image == undefined) {
 			$http({
 				method: 'POST',

@@ -5,7 +5,8 @@
 <title>ImgScoop</title>
 
 <!-- Unknown Script requirement -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 	crossorigin="anonymous"></script>
@@ -27,7 +28,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
-	
+
 <!-- Local CSS -->
 <link rel="stylesheet" href="index.css">
 <link rel="stylesheet" href="/pages/profile.css">
@@ -47,13 +48,14 @@
 				<li><a ui-sref="profile" ui-sref-active="active">Profile</a></li>
 				<li><a ui-sref="profile({username: 'kmillz'})">kmillz</a></li>
 			</ul>
-				<ul class="nav navbar-nav navbar-right" ng-if="loggedin !== undefined">
-					<li><a ui-sref="profile({username: '{{loggedin.username}}'})">{{loggedin.username}}</a></li>
-					<li><a ng-click="logout()">Sign-out</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right" ng-if="loggedin == undefined">
-					<li><a data-toggle="modal" data-target="#myModal" data-offset-right="0">Sign-in</a></li>
-				</ul>
+			<ul class="nav navbar-nav navbar-right" ng-if="loggedin != null">
+				<li><a ui-sref="profile({username: '{{loggedin.username}}'})">{{loggedin.username}}</a></li>
+				<li><a ng-click="logout()">Sign-out</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" ng-if="loggedin == null">
+				<li><a data-toggle="modal" data-target="#myModal"
+					data-offset-right="0">Sign-in</a></li>
+			</ul>
 		</div>
 	</nav>
 
@@ -90,7 +92,8 @@
 				<div class="modal-footer" id="modal-signin">
 					<a href="#" id="form-signin-no">Don't have an account? Create a
 						new user!</a>
-					<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="login()">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						ng-click="login()">Submit</button>
 				</div>
 			</div>
 

@@ -61,22 +61,16 @@ public class PostController {
 			@RequestParam String body, @RequestParam int thread) throws IOException {
 		User author = (User) req.getSession().getAttribute("loggedin");
 		Thread parent = threadService.findById(thread).getBody().get(0);
-		if (image != null) {
-			byte[] img = null;
-			try {
-				img = image.getBytes();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-			}
-			Post post = new Post(author, body, img, parent, new Timestamp(System.currentTimeMillis()));
-			System.out.println("with image " + post);
-			return postService.create(post);
-		} else {
-			Post post = new Post(author, body, null, parent, new Timestamp(System.currentTimeMillis()));
-			System.out.println("without image " + post);
-			return postService.create(post);
+		byte[] img = null;
+		try {
+			img = image.getBytes();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
+		Post post = new Post(author, body, img, parent, new Timestamp(System.currentTimeMillis()));
+		System.out.println("with image " + post);
+		return postService.create(post);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
