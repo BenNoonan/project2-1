@@ -9,9 +9,57 @@ app.controller("MainCtrl", function($scope) {
 	console.log("In the main ctrl");
 });
 
-app.controller("ThreadCtrl", function() {
-	// Fetching threads for the pages here
-	console.log("In the thread ctrl");
+app.controller('ForumCtrl', function($http, $scope) {
+	console.log("I made it inside display all thread");
+	
+	$scope.count = 1;
+	$scope.bool = 1;
+	$http({	
+		method: 'GET',
+		url: 'thread/page/1'
+	})
+	.then(function(response) {
+		$scope.displayAllThread = response.data;
+	});
+	$scope.pageNext = function() {
+		$scope.count++;
+		$http({	
+			method: 'GET',
+			url: 'thread/page/'+$scope.count
+		})
+		.then(function(response) {
+			$scope.displayAllThread = response.data;
+			if($scope.displayAllThread.length < 15){
+				$scope.bool = -1;
+			}
+		});
+	}
+	$scope.pagePrev = function() {
+		$scope.count--;
+		if($scope.count <= 1){
+			$scope.bool = 1;
+		}
+		$http({	
+			method: 'GET',
+			url: 'thread/page/'+$scope.count
+		})
+		.then(function(response) {
+			$scope.displayAllThread = response.data;
+		});
+	}
+	
+});
+
+app.controller("ThreadCtrl", function($scope, $http, $stateParams) {
+	console.log("ThreadCtrl");
+	$http({
+		method : 'GET',
+		url : 'thread/id='+$stateParams.id
+	})
+	.then(function(response) {
+		$scope.threadContent = response.data[0];
+		console.log("Response " + $scope.threadContent);
+	})
 });
 
 app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
@@ -41,7 +89,7 @@ app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	// To default to the threads page
-	$urlRouterProvider.when('', '/threads');
+	$urlRouterProvider.when('', '/forum');
 	$stateProvider.state({
 		// Useless state
 		name : 'index',
@@ -53,9 +101,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		templateUrl : '/pages/profile.html',
 		controller : 'ProfileCtrl'
 	}).state({
-		name : 'threads',
-		url : '/threads',
-		templateUrl : '/threads.html',
+		name : 'forum',
+		url : '/forum',
+		templateUrl : '/forum.html',
+		controller : 'ForumCtrl'
+	}).state({
+		name : 'thread',
+		url : '/thread?t=:id',
+		templateUrl : '/pages/thread.html',
 		controller : 'ThreadCtrl'
 	});
 })

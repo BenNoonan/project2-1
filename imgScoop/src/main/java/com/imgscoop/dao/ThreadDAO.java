@@ -15,4 +15,5 @@ public interface ThreadDAO {
 	public List<Thread> findByPage(int page);
 	public List<Thread> findByTitle(String title);
 	public List<Thread> findByTag(List<Tag> tags);
+	public List<Thread> findById(int id);
 }

@@ -81,4 +81,14 @@ public class ThreadService {
 			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	public ResponseEntity<List<Thread>> findById(int id){
+		try{		
+			dao.findById(id);
+			return new ResponseEntity<List<Thread>>(HttpStatus.OK);}
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
