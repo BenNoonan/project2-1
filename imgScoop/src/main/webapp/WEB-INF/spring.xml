@@ -20,7 +20,7 @@
 				 http://localhost:8080/proj/static/index.html -->
 		<!-- given a string ex: "home", it is resolved to /pages/home.html -->
 	</bean>
-	
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
 	<context:component-scan base-package="com.imgscoop.*" />
 
 </beans>

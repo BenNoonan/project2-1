@@ -36,7 +36,7 @@ public class PostService {
 	 */
 	public ResponseEntity<Void> create(Post post) {
 		dao.create(post);
-		return new ResponseEntity<Void>(HttpStatus.I_AM_A_TEAPOT);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
 	/**

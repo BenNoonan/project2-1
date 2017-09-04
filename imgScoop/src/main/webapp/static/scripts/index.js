@@ -1,13 +1,16 @@
-var app = angular.module('imgScoopApi', [ 'ui.router' ])
+var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ])
 
 app.controller("MainCtrl", function($rootScope, $scope, $http) {
 	// Creating threads here
 	// Logging in here
-	$scope.login = function(){
+	$scope.login = function() {
 		$http({
-			method: "POST",
-			url: "/login",
-			params: {"username": $scope.username, "password": $scope.password}
+			method : "POST",
+			url : "/login",
+			params : {
+				"username" : $scope.username,
+				"password" : $scope.password
+			}
 		}).then(function(value) {
 			$rootScope.loggedin = value.data;
 			console.log($rootScope.loggedin);
@@ -18,10 +21,10 @@ app.controller("MainCtrl", function($rootScope, $scope, $http) {
 			console.log("default" + value);
 		});
 	};
-	$scope.logout = function(){
+	$scope.logout = function() {
 		$http({
-			method: "POST",
-			url: "/logout"
+			method : "POST",
+			url : "/logout"
 		}).then(function(value) {
 			$rootScope.loggedin = undefined;
 		});
@@ -31,55 +34,96 @@ app.controller("MainCtrl", function($rootScope, $scope, $http) {
 
 app.controller('ForumCtrl', function($http, $scope) {
 	console.log("I made it inside display all thread");
-	
+
 	$scope.count = 1;
 	$scope.bool = 1;
-	$http({	
-		method: 'GET',
-		url: 'thread/page/1'
-	})
-	.then(function(response) {
+	$http({
+		method : 'GET',
+		url : 'thread/page/1'
+	}).then(function(response) {
 		$scope.displayAllThread = response.data;
 	});
 	$scope.pageNext = function() {
 		$scope.count++;
-		$http({	
-			method: 'GET',
-			url: 'thread/page/'+$scope.count
-		})
-		.then(function(response) {
+		$http({
+			method : 'GET',
+			url : 'thread/page/' + $scope.count
+		}).then(function(response) {
 			$scope.displayAllThread = response.data;
-			if($scope.displayAllThread.length < 15){
+			if ($scope.displayAllThread.length < 15) {
 				$scope.bool = -1;
 			}
 		});
 	}
 	$scope.pagePrev = function() {
 		$scope.count--;
-		if($scope.count <= 1){
+		if ($scope.count <= 1) {
 			$scope.bool = 1;
 		}
-		$http({	
-			method: 'GET',
-			url: 'thread/page/'+$scope.count
-		})
-		.then(function(response) {
+		$http({
+			method : 'GET',
+			url : 'thread/page/' + $scope.count
+		}).then(function(response) {
 			$scope.displayAllThread = response.data;
 		});
 	}
-	
+
 });
 
-app.controller("ThreadCtrl", function($scope, $http, $stateParams) {
+app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
+		$http, $stateParams) {
 	console.log("ThreadCtrl");
 	$http({
 		method : 'GET',
-		url : 'thread/id='+$stateParams.id
-	})
-	.then(function(response) {
+		url : 'thread/id=' + $stateParams.id
+	}).then(function(response) {
 		$scope.threadContent = response.data[0];
 		console.log("Response " + $scope.threadContent);
 	})
+	//Image uploading and posting
+	$scope.post = function() {
+		console.log($scope.image == undefined)
+		if ($scope.image == undefined) {
+			$http({
+				method: 'POST',
+				url: '/post',
+				params: {
+					body: $scope.body,
+					thread: $scope.threadContent.id
+				}
+			}).then(function(value) {
+				window.location.reload();
+				console.log("success");
+			}, function(reason) {
+				
+			}, function(value) {
+				
+			});
+		} else {
+			$scope.image.upload = Upload.upload({
+				method : 'POST',
+				url : '/post/img',
+				data : {
+					body : $scope.body,
+					image : $scope.image,
+					thread : $scope.threadContent.id
+				}
+			});
+			console.log("about to upload");
+			$scope.image.upload.then(function(value) {
+				$timeout(function() {
+					$scope.image.result = value.data;
+					console.log($scope.image.result);
+				});
+			}, function(reason) {
+				console.log("reason");
+				console.log(reason);
+			}, function(value) {
+				console.log("something else");
+				console.log(value);
+			})
+		}
+	}
 });
 
 app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
@@ -88,10 +132,6 @@ app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
 		url : '/post/user/' + $stateParams.username
 	}).then(function(response) {
 		$scope.posts = response.data;
-	}, function(error) {
-		console.log('Error: ' + error);
-	}, function(notify) {
-		console.log('Notify: ' + notify);
 	});
 	$http({
 		method : 'GET',
@@ -100,18 +140,12 @@ app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
 		$scope.userInfo = response.data;
 		console.log($scope.userInfo);
 	});
-	console.log("In the profile ctrl");
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	// To default to the threads page
 	$urlRouterProvider.when('', '/forum');
 	$stateProvider.state({
-		// Useless state
-		name : 'index',
-		url : '/',
-		templateUrl : '/'
-	}).state({
 		name : 'profile',
 		url : '/profile/:username',
 		templateUrl : '/pages/profile.html',

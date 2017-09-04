@@ -47,7 +47,7 @@ public class Post {
 		this.thread = thread;
 		this.submitted = submitted;
 	}
-	
+
 	public Post(User user, String body, byte[] image, Thread thread, Timestamp submitted) {
 		super();
 		this.user = user;
@@ -107,8 +107,9 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", user=" + user.getUsername() + ", body=" + body + ", image=" + Arrays.toString(image)
-				+ ", thread=" + thread.getTitle() + ", submitted=" + submitted + "]";
+		return "Post [id=" + id + ", user=" + user.getUsername() + ", body=" + body + ", image="
+				+ image + ", thread=" + thread.getTitle() + ", submitted="
+				+ submitted + "]";
 	}
 
 }
