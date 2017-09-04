@@ -51,8 +51,7 @@ public class ThreadService {
 	
 	public ResponseEntity<List<Thread>> findByAll(){
 		try{
-			dao.findByAll();
-			return new ResponseEntity<List<Thread>>(HttpStatus.OK);
+			return new ResponseEntity<List<Thread>>(dao.findByAll(), HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
@@ -61,8 +60,7 @@ public class ThreadService {
 	
 	public ResponseEntity<List<Thread>> findByTitle(String title){
 		try{
-			dao.findByTitle(title);
-			return new ResponseEntity<List<Thread>>(HttpStatus.OK);	
+			return new ResponseEntity<List<Thread>>(dao.findByTitle(title), HttpStatus.OK);	
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
@@ -74,9 +72,8 @@ public class ThreadService {
 
 	public ResponseEntity<List<Thread>> findByPage(int page){
 		try{		
-			dao.findByPage(page);
-			return new ResponseEntity<List<Thread>>(HttpStatus.OK);}
-		catch (Exception e) {
+			return new ResponseEntity<List<Thread>>(dao.findByPage(page), HttpStatus.OK);
+		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
 		}
@@ -84,9 +81,8 @@ public class ThreadService {
 	
 	public ResponseEntity<List<Thread>> findById(int id){
 		try{		
-			dao.findById(id);
-			return new ResponseEntity<List<Thread>>(HttpStatus.OK);}
-		catch (Exception e) {
+			return new ResponseEntity<List<Thread>>(dao.findById(id), HttpStatus.OK);
+		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Thread>>(HttpStatus.NOT_FOUND);
 		}

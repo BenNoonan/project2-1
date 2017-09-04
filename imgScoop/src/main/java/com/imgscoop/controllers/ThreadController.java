@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,52 +15,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imgscoop.scoops.Thread;
-import com.imgscoop.dao.ThreadDAO;
+import com.imgscoop.services.ThreadService;
 
 @Controller
 @RequestMapping(value="/thread")
 public class ThreadController {
 
 	@Autowired
-	private ThreadDAO dao;
+	private ThreadService service;
 
-	public void setDao(ThreadDAO dao) {
-		this.dao = dao;
+	public void setDao(ThreadService service) {
+		this.service = service;
 	}
 
 	@RequestMapping(method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void create(@Valid @RequestBody Thread thread){
-		dao.create(thread);
+	public ResponseEntity<Void> create(@Valid @RequestBody Thread thread){
+		return service.create(thread);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void delete(@RequestBody Thread thread){
-		dao.delete(thread);
+	public ResponseEntity<Void> delete(@RequestBody Thread thread){
+		return service.delete(thread);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void update(@RequestBody Thread thread){
-		dao.update(thread);
+		service.update(thread);
 	}
 	
 	@RequestMapping(value="/all", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Thread> findByAll(){
-		return dao.findByAll();
+	public ResponseEntity<List<Thread>> findByAll(){
+		return service.findByAll();
 	}
 	
 	@RequestMapping(value="/title", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Thread> findByTitle(@RequestBody String title){
-		return dao.findByTitle(title);
+	public ResponseEntity<List<Thread>>  findByTitle(@RequestBody String title){
+		return service.findByTitle(title);
 	}
 	
 	//@ResponseBody
@@ -68,14 +69,14 @@ public class ThreadController {
 	@RequestMapping(value="/page/{page}", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Thread> findByPage(@PathVariable int page){
-		return dao.findByPage(page);
+	public ResponseEntity<List<Thread>> findByPage(@PathVariable int page){
+		return service.findByPage(page);
 	}
 	
 	@RequestMapping(value="/id={id}", method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Thread>findById(@PathVariable int id){
-		return dao.findById(id);
+	public ResponseEntity<List<Thread>> findById(@PathVariable int id){
+		return service.findById(id);
 	}
 }
