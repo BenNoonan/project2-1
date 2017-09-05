@@ -20,13 +20,13 @@ public class ThreadService {
 		this.dao = dao;
 	}
 	
-	public ResponseEntity<Void> create(Thread thread){
+	public ResponseEntity<Thread> create(Thread thread){
 		try{
 			dao.create(thread);
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
+			return new ResponseEntity<Thread>(thread, HttpStatus.CREATED);
 		}catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Thread>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

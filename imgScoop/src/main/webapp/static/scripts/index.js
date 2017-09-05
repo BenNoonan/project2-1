@@ -35,8 +35,6 @@ app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 });
 
 app.controller('ForumCtrl', function($http, $scope) {
-	console.log("I made it inside display all thread");
-
 	$scope.count = 1;
 	$scope.bool = 1;
 	$http({
@@ -69,7 +67,20 @@ app.controller('ForumCtrl', function($http, $scope) {
 			$scope.displayAllThread = response.data;
 		});
 	}
-
+	$scope.createThread = function() {
+		$http({
+			method : 'POST',
+			url : '/thread',
+			params: {
+				title: $scope.title
+			}
+		}).then(function(response) {
+			//Take me to that thread
+			$scope.newThread = response.data;
+			window.location.href = window.location.origin + "/#!/thread?id=" + 
+									$scope.newThread.id;
+		});
+	}
 });
 
 app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
@@ -80,7 +91,7 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 		url : 'thread/id=' + $stateParams.id
 	}).then(function(response) {
 		$scope.threadContent = response.data[0];
-		console.log("Response " + $scope.threadContent);
+		console.log("Response Get" + $scope.threadContent);
 	})
 	//Image uploading and posting
 	$scope.createPost = function(body, image) {
