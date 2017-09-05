@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.imgscoop.dao.UserDAO;
+import com.imgscoop.scoops.Cryptor;
 import com.imgscoop.scoops.Role;
 import com.imgscoop.scoops.User;
 
@@ -27,6 +28,7 @@ public class UserService {
 	//TODO: Password Encryption
 	public ResponseEntity<User> create(User user) {
 		user.hashPass();
+		user.setRole(new Role(2, "User"));
 		try {
 			dao.create(user);
 			return new ResponseEntity<User>(user, HttpStatus.CREATED);
@@ -96,7 +98,7 @@ public class UserService {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 		User user = response.getBody();
-		if(user.getPassword().equals(password)){
+		if(Cryptor.authPassword(password, user.getPassword())){
 			user.setPassword(null);
 			req.getSession().setAttribute("loggedin", user);
 			return new ResponseEntity<User>(user, HttpStatus.OK);

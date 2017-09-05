@@ -34,6 +34,7 @@ public class UserController {
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<User> create(@Valid @RequestBody User user, HttpServletRequest req){
+		System.out.println(user);
 		return service.create(user);
 	}
 	

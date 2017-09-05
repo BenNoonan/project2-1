@@ -3,17 +3,23 @@
 		<div class=well>
 			<p class=text-center>{{userInfo.username}}</p>
 			<p class=text-center>{{userInfo.email}}</p>
-			<p class=text-center>{{'Security Level: "' + userInfo.role.role +'"'}}</p>
+			<p class=text-center>{{'Security Level: "' + userInfo.role.role
+				+'"'}}</p>
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div ng-repeat="post in posts">
-			<div class="well">
-				<p id="author">
-					<a ui-sref="profile({username: '{{post.user.username}}'})">{{post.user.username}}</a>
-				</p>
-				<p style="text-indent: 5em">{{post.body}}</p>
-				<p>{{post.submitted | date: 'LLLL dd, yyyy'}}</p>
+		<div class="well" ng-repeat="t in posts">
+			<div class="media">
+				<a class="pull-left" href="#"> <img class="media-object"
+					style="width: 250px"
+					data-ng-src="data:image/png;base64,{{t.image}}" />
+				</a>
+				<div class="media-body">
+					<p class="text-left">
+						<a ui-sref="profile({username: '{{t.user.username}}'})">{{t.user.username}}</a>
+					</p>
+					<p>{{t.body}}</p>
+				</div>
 			</div>
 		</div>
 	</div>

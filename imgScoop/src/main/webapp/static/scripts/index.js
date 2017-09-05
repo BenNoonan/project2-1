@@ -108,10 +108,6 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 			}).then(function(value) {
 				window.location.reload();
 				console.log("success");
-			}, function(reason) {
-				
-			}, function(value) {
-				
 			});
 		} else {
 			console.log("about to upload image");
@@ -127,6 +123,7 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 			image.upload.then(function(value) {
 				$timeout(function() {
 					image.result = value.data;
+					window.location.reload();
 					console.log("Image result success timeout" + image.result);
 				});
 			}, function(reason) {
@@ -156,6 +153,18 @@ app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
 	});
 });
 
+app.controller('SignupCtrl', function($rootScope, $scope, $http, $window) {
+	$scope.signup = function(){
+		$http({
+			method: 'POST',
+			url: '/user',
+			data: $scope.create
+		}).then(function(response){
+			console.log(response);
+		});
+	}
+});
+
 app.config(function($stateProvider, $urlRouterProvider) {
 	// To default to the threads page
 	$urlRouterProvider.when('', '/forum');
@@ -164,6 +173,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		url : '/profile/:username',
 		templateUrl : '/pages/profile.html',
 		controller : 'ProfileCtrl'
+	}).state({
+		name : 'signup',
+		url : '/signup',
+		templateUrl: '/pages/signup.html',
+		controller: 'SignupCtrl'
 	}).state({
 		name : 'forum',
 		url : '/forum',
