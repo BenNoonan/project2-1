@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imgscoop.scoops.Thread;
@@ -28,11 +29,10 @@ public class ThreadController {
 		this.service = service;
 	}
 
-	@RequestMapping(method=RequestMethod.POST,
-			consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> create(@Valid @RequestBody Thread thread){
-		return service.create(thread);
+	public ResponseEntity<Thread> create(@Valid @RequestParam String title){
+		return service.create(new Thread(null, title, null));
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,
