@@ -35,11 +35,10 @@ public class ThreadController {
 		return service.create(new Thread(null, title, null));
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,
-			consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<Void> delete(@RequestBody Thread thread){
-		return service.delete(thread);
+	public ResponseEntity<Void> delete(@RequestParam int id){
+		return service.delete(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,

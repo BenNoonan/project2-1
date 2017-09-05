@@ -48,7 +48,7 @@ public class ThreadDAOTest {
 	@Ignore
 	//delete a thread by id
 	public void deleteThread(){
-		dao.delete(testCreateThread);
+		//dao.delete(testCreateThread);
 		assertEquals(2,  dao.findByAll().size());
 	}
 	

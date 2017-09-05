@@ -39,13 +39,13 @@ public class ThreadService {
 		}
 	}
 	
-	public ResponseEntity<Void> delete(Thread thread){
+	public ResponseEntity<Void> delete(int id){
 		try{
-			dao.delete(thread);
+			dao.delete(id);
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.I_AM_A_TEAPOT);
 		}
 	}
 	
