@@ -8,7 +8,7 @@ import com.imgscoop.scoops.Thread;
 public interface ThreadDAO {
 	
 	public void create(Thread thread);
-	public void delete(Thread thread);
+	public void delete(int id);
 	public void update(Thread thread);
 	
 	public List<Thread> findByAll();

@@ -81,6 +81,21 @@ app.controller('ForumCtrl', function($http, $scope) {
 									$scope.newThread.id;
 		});
 	}
+	$scope.deleteThread = function(id) {
+		console.log("DELETE " + id);
+		$http({
+			method : 'DELETE',
+			url : '/thread',
+			params: {
+				id: id
+			}
+		}).then(function(response) {
+			//Fresh page
+			
+			//console.log(response);
+			window.location.reload();
+		});
+	}
 });
 
 app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,

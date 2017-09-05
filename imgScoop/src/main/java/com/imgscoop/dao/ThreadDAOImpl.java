@@ -28,8 +28,10 @@ public class ThreadDAOImpl implements ThreadDAO {
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void delete(Thread thread) {
-		sessionFactory.getCurrentSession().delete(thread);
+	public void delete(int id) {
+		  Thread thread = (Thread) sessionFactory.getCurrentSession().createCriteria(Thread.class)
+                  .add(Restrictions.eq("id", id)).uniqueResult();
+		  sessionFactory.getCurrentSession().delete(thread);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
