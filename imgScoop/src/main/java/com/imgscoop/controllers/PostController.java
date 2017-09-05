@@ -51,6 +51,7 @@ public class PostController {
 			throws IOException {
 		User author = (User) req.getSession().getAttribute("loggedin");
 		Thread parent = threadService.findById(thread).getBody().get(0);
+		System.out.println("Heererererer");
 		Post post = new Post(author, body, null, parent, new Timestamp(System.currentTimeMillis()));
 		return postService.create(post);
 	}
@@ -61,6 +62,7 @@ public class PostController {
 			@RequestParam String body, @RequestParam int thread) throws IOException {
 		User author = (User) req.getSession().getAttribute("loggedin");
 		Thread parent = threadService.findById(thread).getBody().get(0);
+		System.out.println(image.getOriginalFilename());
 		byte[] img = null;
 		try {
 			img = image.getBytes();

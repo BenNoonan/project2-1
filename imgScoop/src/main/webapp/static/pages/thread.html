@@ -1,17 +1,29 @@
-<h2><b>{{threadContent.title}}</b></h2>
-<br/>
-
-<table class="table table-hover">
-	<tr ng-repeat="t in threadContent.posts">
-		<td>
-			<img alt="No Image Found" data-ng-src="data:image/png;base64,{{t.img}}">
-			<div class="col-sm-2"><a ui-sref="profile({username: '{{t.user.username}}'})">{{t.user.username}}</a></div>
-			<div class="col-sm-10">{{t.body}}</div>
-		</td>
-	</tr>
+<h2>
+	<b>{{threadContent.title}}</b>
+</h2>
+<br />
+<div class="well" ng-repeat="t in threadContent.posts">
+	<div class="media">
+		<a class="pull-left" href="#"> <img class="media-object"
+			style="width: 250px" data-ng-src="data:image/png;base64,{{t.image}}" />
+		</a>
+		<div class="media-body">
+			<p class="text-left">
+				<a ui-sref="profile({username: '{{t.user.username}}'})">{{t.user.username}}</a>
+			</p>
+			<p>{{t.body}}</p>
+		</div>
+	</div>
+</div>
+<div ng-if="loggedin != undefined">
 	<form>
-		Comment: <input type="text" required ng-model="body">
-		Upload image: <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="2MB">
-		<input type="submit" value="Submit Comment" ng-click="post()">
+		Comment: <input type="text" required ng-model="body"> <br>
+		Upload image: <input type="file" ngf-select ng-model="image"
+			name="file" accept="image/*" ngf-max-size="2MB"> <br> <input
+			type="submit" value="Submit Comment"
+			ng-click="createPost(body, image)">
 	</form>
-</table>
+</div>
+<div class=well ng-if="loggedin == undefined">
+	<p>You need to sign in to be a part of the converstation!</p>
+</div>

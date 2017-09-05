@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class Post {
 	@Column(name = "contents")
 	private String body;
 	@Column(name = "image_data")
+	@Lob
 	private byte[] image;
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "thread_id")

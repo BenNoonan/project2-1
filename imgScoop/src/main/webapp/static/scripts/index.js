@@ -83,13 +83,15 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 		console.log("Response " + $scope.threadContent);
 	})
 	//Image uploading and posting
-	$scope.post = function() {
-		if ($scope.image == undefined) {
+	$scope.createPost = function(body, image) {
+		console.log(image + " " + body);
+		if (image == undefined) {
+			console.log("About to post no image");
 			$http({
 				method: 'POST',
 				url: '/post',
 				params: {
-					body: $scope.body,
+					body: body,
 					thread: $scope.threadContent.id
 				}
 			}).then(function(value) {
@@ -101,20 +103,20 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 				
 			});
 		} else {
-			$scope.image.upload = Upload.upload({
+			console.log("about to upload image");
+			image.upload = Upload.upload({
 				method : 'POST',
 				url : '/post/img',
 				data : {
-					body : $scope.body,
-					image : $scope.image,
+					body : body,
+					image : image,
 					thread : $scope.threadContent.id
 				}
 			});
-			console.log("about to upload");
-			$scope.image.upload.then(function(value) {
+			image.upload.then(function(value) {
 				$timeout(function() {
-					$scope.image.result = value.data;
-					console.log($scope.image.result);
+					image.result = value.data;
+					console.log("Image result success timeout" + image.result);
 				});
 			}, function(reason) {
 				console.log("reason");
