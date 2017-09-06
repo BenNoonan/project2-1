@@ -28,14 +28,16 @@
 					data-ng-src="data:image/png;base64,{{f.posts[0].image}}" />
 				</a>
 				<div class="media-body">
+				
+					<div ng-if="loggedin.role.role == 'Admin'">
+						<button type="button"
+							style="color: black; background-color: #ff1e1e"
+							class="btn btn-default pull-right" ng-click="deleteThread(f.id)">BAN</button>
+					</div>
+					
 					<h3>
 						<a ui-sref="thread({id: f.id})">{{f.title}}</a>
 					</h3>
-					
-  					<div ng-if="loggedin.role.role == 'Admin'">
-          				<button type="button" style="color: black; background-color: #ff1e1e" 
-          				class="btn btn-default pull-right" ng-click="deleteThread(f.id)">BAN</button>
-		  			</div>					
 					
 					<p class="text-left">
 						<a ui-sref="profile({username: '{{f.posts[0].user.username}}'})">{{f.posts[0].user.username}}</a>
@@ -47,7 +49,10 @@
 							</i>{{f.posts[0].submitted | date: 'LLLL dd, yyyy'}}</span></li>
 						<li>|</li>
 						<span><i class="glyphicon glyphicon-comment"></i>
-							{{f.posts.length}} comments</span>
+						<span ng-if="(f.posts.length) > 0">
+							{{f.posts.length-1}} comments
+						</span>
+						</span>
 					</ul>
 				</div>
 			</div>

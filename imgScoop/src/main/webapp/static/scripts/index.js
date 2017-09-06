@@ -1,5 +1,10 @@
 var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
+sortFunc = function sortByTime(arr){
+		return arr.sort(function(x, y){
+			return y.posts[y.posts.length-1].submitted - x.posts[x.posts.length-1].submitted;
+		});
+}
 app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 	// Creating threads here
 	// Logging in here
@@ -41,7 +46,8 @@ app.controller('ForumCtrl', function($http, $scope) {
 		method : 'GET',
 		url : 'thread/page/1'
 	}).then(function(response) {
-		$scope.displayAllThread = response.data;
+		$scope.displayAllThread = sortFunc(response.data);
+		console.log($scope.displayAllThread);
 	});
 	$scope.pageNext = function() {
 		$scope.count++;
@@ -49,10 +55,11 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
-			$scope.displayAllThread = response.data;
-			if ($scope.displayAllThread.length < 15) {
+			
+			if (response.data.length < 15) {
 				$scope.bool = -1;
 			}
+			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
 	$scope.pagePrev = function() {
@@ -64,7 +71,7 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
-			$scope.displayAllThread = response.data;
+			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
 	$scope.createThread = function() {
