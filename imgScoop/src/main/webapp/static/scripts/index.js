@@ -106,18 +106,25 @@ app.controller('ForumCtrl', function($http, $scope) {
 							+ "/#!/thread?id=" + $scope.newThread.id;
 				});
 	}
-	$scope.deleteThread = function(id) {
-		console.log("DELETE " + id);
+	$scope.deleteThread = function(f) {
+		console.log(f)
+		f.posts.forEach(function(post){
+			$http({
+				method : 'DELETE',
+				url : '/post',
+				params : {
+					id : post.id
+				}
+			});
+		});		
 		$http({
 			method : 'DELETE',
 			url : '/thread',
 			params : {
-				id : id
+				id : f.id
 			}
 		}).then(function(response) {
 			// Fresh page
-
-			// console.log(response);
 			window.location.reload();
 		});
 	}
