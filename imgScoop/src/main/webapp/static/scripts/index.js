@@ -2,10 +2,6 @@ var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
 sortFunc = function sortByTime(arr) {
 	return arr.sort(function(x, y) {
-		// console.log(y.posts[y.posts.length-1] + " " +
-		// x.posts[x.posts.length-1]);
-		// console.log("y:" + y.posts[y.posts.length-1].id + " & x:" +
-		// x.posts[x.posts.length-1].id);
 		return y.posts[y.posts.length - 1].id - x.posts[x.posts.length - 1].id;
 	});
 }
@@ -58,10 +54,10 @@ app.controller('ForumCtrl', function($http, $scope) {
 		method : 'GET',
 		url : 'thread/page/1'
 	}).then(function(response) {
+		$scope.displayAllThread = sortFunc(response.data);
 		$scope.displayAllThread.forEach(function(arg) {
 			arg.posts = sortPosts(arg.posts)
 		});
-		$scope.displayAllThread = sortFunc(response.data);
 		console.log($scope.displayAllThread);
 	});
 	$scope.pageNext = function() {
@@ -74,10 +70,10 @@ app.controller('ForumCtrl', function($http, $scope) {
 			if (response.data.length < 15) {
 				$scope.bool = -1;
 			}
+			$scope.displayAllThread = sortFunc(response.data);
 			$scope.displayAllThread.forEach(function(arg) {
 				arg.posts = sortPosts(arg.posts)
 			});
-			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
 	$scope.pagePrev = function() {
@@ -89,10 +85,10 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
+			$scope.displayAllThread = sortFunc(response.data);
 			$scope.displayAllThread.forEach(function(arg) {
 				arg.posts = sortPosts(arg.posts)
 			});
-			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
 	$scope.createThread = function() {
