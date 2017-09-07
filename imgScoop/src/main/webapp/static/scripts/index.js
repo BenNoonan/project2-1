@@ -43,29 +43,31 @@ app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 });
 
 app.controller('ForumCtrl', function($http, $scope) {
-	$scope.count = 1;
+	$scope.count = 0;
 	$scope.bool = 1;
 	$http({
 		method : 'GET',
-		url : 'thread/page/1'
+		url : 'thread/page/0'
 	}).then(function(response) {
 		$scope.displayAllThread = response.data;
 		$scope.displayAllThread.forEach(function(arg) {
 			arg.posts = sortPosts(arg.posts)
 		});
-		console.log($scope.displayAllThread);
+		
 	});
 	$scope.pageNext = function() {
-		$scope.count++;
+		$scope.count++;	
+		console.log($scope.count);
 		$http({
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
-		}).then(function(response) {
-
-			if (response.data.length < 15) {
+		}).then(function(response) {		
+			$scope.displayAllThread = response.data;
+			
+			if (response.data.length < 10) {
 				$scope.bool = -1;
 			}
-			$scope.displayAllThread = response.data;
+			else $scope.bool = 0;
 			$scope.displayAllThread.forEach(function(arg) {
 				arg.posts = sortPosts(arg.posts)
 			});
@@ -73,8 +75,13 @@ app.controller('ForumCtrl', function($http, $scope) {
 	}
 	$scope.pagePrev = function() {
 		$scope.count--;
-		if ($scope.count <= 1) {
+		console.log($scope.count);
+		if ($scope.count <= 0) {
+			$scope.count = 0;
 			$scope.bool = 1;
+		}
+		else if($scope.count != 0){
+			$scope.bool = 0;
 		}
 		$http({
 			method : 'GET',

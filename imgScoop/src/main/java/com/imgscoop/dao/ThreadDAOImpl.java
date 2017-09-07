@@ -61,9 +61,9 @@ public class ThreadDAOImpl implements ThreadDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Thread> findByPage(int page) {
-		if(page > 0) 
-			page *= 15;
-		return sessionFactory.getCurrentSession().createQuery("from Thread").setFirstResult(page).setMaxResults(15)
+		if(page >= 0) 
+			page *= 10;
+		return sessionFactory.getCurrentSession().createQuery("from Thread").setFirstResult(page).setMaxResults(10)
 				.list();
 	}
 
