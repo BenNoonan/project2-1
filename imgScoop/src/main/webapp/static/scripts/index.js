@@ -1,10 +1,5 @@
 var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
-sortFunc = function sortByTime(arr) {
-	return arr.sort(function(x, y) {
-		return y.posts[y.posts.length - 1].id - x.posts[x.posts.length - 1].id;
-	});
-}
 sortPosts = function(arg) {
 	return arg.sort(function(a, b) {
 		return a.id > b.id;
@@ -54,7 +49,7 @@ app.controller('ForumCtrl', function($http, $scope) {
 		method : 'GET',
 		url : 'thread/page/1'
 	}).then(function(response) {
-		$scope.displayAllThread = sortFunc(response.data);
+		$scope.displayAllThread = response.data;
 		$scope.displayAllThread.forEach(function(arg) {
 			arg.posts = sortPosts(arg.posts)
 		});
@@ -70,7 +65,7 @@ app.controller('ForumCtrl', function($http, $scope) {
 			if (response.data.length < 15) {
 				$scope.bool = -1;
 			}
-			$scope.displayAllThread = sortFunc(response.data);
+			$scope.displayAllThread = response.data;
 			$scope.displayAllThread.forEach(function(arg) {
 				arg.posts = sortPosts(arg.posts)
 			});
@@ -85,7 +80,7 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
-			$scope.displayAllThread = sortFunc(response.data);
+			$scope.displayAllThread = response.data;
 			$scope.displayAllThread.forEach(function(arg) {
 				arg.posts = sortPosts(arg.posts)
 			});
