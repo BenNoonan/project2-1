@@ -215,7 +215,7 @@ app.controller('SignupCtrl', function($rootScope, $scope, $http, $window) {
 			url : '/user',
 			data : $scope.create
 		}).then(function(response) {
-			console.log(response);
+			window.location.href = window.location.origin
 		});
 	}
 });
