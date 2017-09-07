@@ -59,7 +59,7 @@ public class PostDAOTests {
 	
 	@Test
 	public void deleteTest() {
-		dao.delete(cdPost);
+		dao.delete(cdPost.getId());
 		assertEquals(4, dao.getAll().size());
 	}
 	
