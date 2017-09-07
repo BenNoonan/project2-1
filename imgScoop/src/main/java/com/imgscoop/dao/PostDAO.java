@@ -9,7 +9,7 @@ public interface PostDAO {
 
 	public void create(Post post);
 
-	public void delete(Post post);
+	public void delete(int id);
 
 	public void update(Post post);
 	

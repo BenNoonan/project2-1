@@ -44,9 +44,9 @@ public class PostService {
 	 * admin account, you can't delete posts
 	 * 
 	 */
-	public ResponseEntity<Void> delete(Post post) {
+	public ResponseEntity<Void> delete(int id) {
 		try {
-			dao.delete(post);
+			dao.delete(id);
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			System.out.println("Exception space");

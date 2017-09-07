@@ -72,10 +72,10 @@ public class PostController {
 		return postService.create(post);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<Void> delete(@Valid @RequestBody Post post, HttpServletRequest req) {
-		return postService.delete(post);
+	public ResponseEntity<Void> delete(@Valid @RequestParam int id, HttpServletRequest req) {
+		return postService.delete(id);
 	}
 
 	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
