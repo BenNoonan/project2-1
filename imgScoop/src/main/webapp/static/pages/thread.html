@@ -10,7 +10,15 @@
 		<div class="media-body">
 			<p class="text-left">
 				<a ui-sref="profile({username: '{{t.user.username}}'})">{{t.user.username}}</a>
+			
+			<div ng-if="loggedin.role.role == 'Admin'">
+				<button type="button"
+					style="color: black; background-color: #ff1e1e"
+					class="btn btn-default pull-right" ng-click="deletePost(t.id)">BAN</button>
+			</div>
+
 			</p>
+			
 			<p>{{t.body}}</p>
 		</div>
 	</div>

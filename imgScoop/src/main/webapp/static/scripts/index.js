@@ -2,7 +2,9 @@ var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
 sortFunc = function sortByTime(arr){
 		return arr.sort(function(x, y){
-			return y.posts[y.posts.length-1].submitted - x.posts[x.posts.length-1].submitted;
+			//console.log(y.posts[y.posts.length-1] + "   " + x.posts[x.posts.length-1]);
+			//console.log("y:" + y.posts[y.posts.length-1].id + " & x:" + x.posts[x.posts.length-1].id);
+			return y.posts[y.posts.length-1].id - x.posts[x.posts.length-1].id;
 		});
 }
 app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
@@ -47,7 +49,7 @@ app.controller('ForumCtrl', function($http, $scope) {
 		url : 'thread/page/1'
 	}).then(function(response) {
 		$scope.displayAllThread = sortFunc(response.data);
-		console.log($scope.displayAllThread);
+		//console.log($scope.displayAllThread);
 	});
 	$scope.pageNext = function() {
 		$scope.count++;
@@ -113,8 +115,18 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 		url : 'thread/id=' + $stateParams.id
 	}).then(function(response) {
 		$scope.threadContent = response.data[0];
-		console.log("Response Get" + $scope.threadContent);
 	})
+	$scope.deletePost = function(id){
+		$http({
+			method : 'DELETE',
+			url : '/post',
+			params : {
+				id: id
+			}
+		}).then(function(response) {
+			window.location.reload();
+		});
+	}
 	//Image uploading and posting
 	$scope.createPost = function(body, image) {
 		console.log(image + " " + body);

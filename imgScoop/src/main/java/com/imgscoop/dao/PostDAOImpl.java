@@ -36,7 +36,9 @@ public class PostDAOImpl implements PostDAO {
 		sessionFactory.getCurrentSession().save(post);
 	}
 
-	public void delete(Post post) {
+	public void delete(int id) {
+		Post post = (Post) sessionFactory.getCurrentSession().createCriteria(Post.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
 		sessionFactory.getCurrentSession().delete(post);
 	}
 
