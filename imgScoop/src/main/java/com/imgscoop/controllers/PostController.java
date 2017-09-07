@@ -51,6 +51,9 @@ public class PostController {
 			throws IOException {
 		User author = (User) req.getSession().getAttribute("loggedin");
 		Thread parent = threadService.findById(thread).getBody().get(0);
+		if(author == null){
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+		}
 		Post post = new Post(author, body, null, parent, new Timestamp(System.currentTimeMillis()));
 		return postService.create(post);
 	}
@@ -67,6 +70,9 @@ public class PostController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		if(author == null){
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 		}
 		Post post = new Post(author, body, img, parent, new Timestamp(System.currentTimeMillis()));
 		return postService.create(post);

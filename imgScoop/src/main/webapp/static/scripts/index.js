@@ -1,12 +1,20 @@
 var app = angular.module('imgScoopApi', [ 'ui.router', 'ngFileUpload' ]);
 
-sortFunc = function sortByTime(arr){
-		return arr.sort(function(x, y){
-			//console.log(y.posts[y.posts.length-1] + "   " + x.posts[x.posts.length-1]);
-			//console.log("y:" + y.posts[y.posts.length-1].id + " & x:" + x.posts[x.posts.length-1].id);
-			return y.posts[y.posts.length-1].id - x.posts[x.posts.length-1].id;
-		});
+sortFunc = function sortByTime(arr) {
+	return arr.sort(function(x, y) {
+		// console.log(y.posts[y.posts.length-1] + " " +
+		// x.posts[x.posts.length-1]);
+		// console.log("y:" + y.posts[y.posts.length-1].id + " & x:" +
+		// x.posts[x.posts.length-1].id);
+		return y.posts[y.posts.length - 1].id - x.posts[x.posts.length - 1].id;
+	});
 }
+sortPosts = function(arg) {
+	return arg.sort(function(a, b) {
+		return a.id > b.id;
+	});
+}
+
 app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 	// Creating threads here
 	// Logging in here
@@ -19,15 +27,18 @@ app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 				"username" : $scope.username,
 				"password" : $scope.password
 			}
-		}).then(function(value) {
-			$window.localStorage.setItem('loggedin', JSON.stringify(value.data))
-			$rootScope.loggedin = JSON.parse($window.localStorage.getItem('loggedin'));
-		}, function(reason) {
-			// Invalid username or password
-			console.log("failed" + reason);
-		}, function(value) {
-			console.log("default" + value);
-		});
+		}).then(
+				function(value) {
+					$window.localStorage.setItem('loggedin', JSON
+							.stringify(value.data))
+					$rootScope.loggedin = JSON.parse($window.localStorage
+							.getItem('loggedin'));
+				}, function(reason) {
+					// Invalid username or password
+					console.log("failed" + reason);
+				}, function(value) {
+					console.log("default" + value);
+				});
 	};
 	$scope.logout = function() {
 		$http({
@@ -38,7 +49,6 @@ app.controller("MainCtrl", function($rootScope, $scope, $http, $window) {
 			$rootScope.loggedin = null;
 		});
 	};
-	console.log("In the main ctrl");
 });
 
 app.controller('ForumCtrl', function($http, $scope) {
@@ -48,8 +58,11 @@ app.controller('ForumCtrl', function($http, $scope) {
 		method : 'GET',
 		url : 'thread/page/1'
 	}).then(function(response) {
+		$scope.displayAllThread.forEach(function(arg) {
+			arg.posts = sortPosts(arg.posts)
+		});
 		$scope.displayAllThread = sortFunc(response.data);
-		//console.log($scope.displayAllThread);
+		console.log($scope.displayAllThread);
 	});
 	$scope.pageNext = function() {
 		$scope.count++;
@@ -57,10 +70,13 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
-			
+
 			if (response.data.length < 15) {
 				$scope.bool = -1;
 			}
+			$scope.displayAllThread.forEach(function(arg) {
+				arg.posts = sortPosts(arg.posts)
+			});
 			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
@@ -73,6 +89,9 @@ app.controller('ForumCtrl', function($http, $scope) {
 			method : 'GET',
 			url : 'thread/page/' + $scope.count
 		}).then(function(response) {
+			$scope.displayAllThread.forEach(function(arg) {
+				arg.posts = sortPosts(arg.posts)
+			});
 			$scope.displayAllThread = sortFunc(response.data);
 		});
 	}
@@ -80,28 +99,29 @@ app.controller('ForumCtrl', function($http, $scope) {
 		$http({
 			method : 'POST',
 			url : '/thread',
-			params: {
-				title: $scope.title
+			params : {
+				title : $scope.title
 			}
-		}).then(function(response) {
-			//Take me to that thread
-			$scope.newThread = response.data;
-			window.location.href = window.location.origin + "/#!/thread?id=" + 
-									$scope.newThread.id;
-		});
+		}).then(
+				function(response) {
+					// Take me to that thread
+					$scope.newThread = response.data;
+					window.location.href = window.location.origin
+							+ "/#!/thread?id=" + $scope.newThread.id;
+				});
 	}
 	$scope.deleteThread = function(id) {
 		console.log("DELETE " + id);
 		$http({
 			method : 'DELETE',
 			url : '/thread',
-			params: {
-				id: id
+			params : {
+				id : id
 			}
 		}).then(function(response) {
-			//Fresh page
-			
-			//console.log(response);
+			// Fresh page
+
+			// console.log(response);
 			window.location.reload();
 		});
 	}
@@ -109,39 +129,40 @@ app.controller('ForumCtrl', function($http, $scope) {
 
 app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 		$http, $stateParams) {
-	console.log("ThreadCtrl");
 	$http({
 		method : 'GET',
 		url : 'thread/id=' + $stateParams.id
 	}).then(function(response) {
 		$scope.threadContent = response.data[0];
+		$scope.threadContent.posts = sortPosts($scope.threadContent.posts)
 	})
-	$scope.deletePost = function(id){
+	$scope.deletePost = function(id) {
 		$http({
 			method : 'DELETE',
 			url : '/post',
 			params : {
-				id: id
+				id : id
 			}
 		}).then(function(response) {
 			window.location.reload();
 		});
 	}
-	//Image uploading and posting
+	// Image uploading and posting
 	$scope.createPost = function(body, image) {
-		console.log(image + " " + body);
 		if (image == undefined) {
 			console.log("About to post no image");
 			$http({
-				method: 'POST',
-				url: '/post',
-				params: {
-					body: body,
-					thread: $scope.threadContent.id
+				method : 'POST',
+				url : '/post',
+				params : {
+					body : body,
+					thread : $scope.threadContent.id
 				}
 			}).then(function(value) {
 				window.location.reload();
 				console.log("success");
+			}, function(reason) {
+				console.log(reason)
 			});
 		} else {
 			console.log("about to upload image");
@@ -158,13 +179,10 @@ app.controller("ThreadCtrl", function($scope, $rootScope, Upload, $timeout,
 				$timeout(function() {
 					image.result = value.data;
 					window.location.reload();
-					console.log("Image result success timeout" + image.result);
 				});
 			}, function(reason) {
-				console.log("reason");
 				console.log(reason);
 			}, function(value) {
-				console.log("something else");
 				console.log(value);
 			})
 		}
@@ -188,12 +206,12 @@ app.controller("ProfileCtrl", function($scope, $http, $stateParams) {
 });
 
 app.controller('SignupCtrl', function($rootScope, $scope, $http, $window) {
-	$scope.signup = function(){
+	$scope.signup = function() {
 		$http({
-			method: 'POST',
-			url: '/user',
-			data: $scope.create
-		}).then(function(response){
+			method : 'POST',
+			url : '/user',
+			data : $scope.create
+		}).then(function(response) {
 			console.log(response);
 		});
 	}
@@ -210,8 +228,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	}).state({
 		name : 'signup',
 		url : '/signup',
-		templateUrl: '/pages/signup.html',
-		controller: 'SignupCtrl'
+		templateUrl : '/pages/signup.html',
+		controller : 'SignupCtrl'
 	}).state({
 		name : 'forum',
 		url : '/forum',
