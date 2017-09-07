@@ -62,5 +62,4 @@ public class PostDAOTests {
 		dao.delete(cdPost.getId());
 		assertEquals(4, dao.getAll().size());
 	}
-	
 }
